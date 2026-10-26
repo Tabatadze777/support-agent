@@ -48,6 +48,28 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    environment: production
+    env:
+      SERVER: ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}
+
     steps:
-      - name: test
-        run: echo "deploy layer"
+      - uses: actions/checkout@v7
+
+      - name: Set up SSH
+        env:
+          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$EC2_SSH_KEY" > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf 'Host *\n  IdentityFile ~/.ssh/id_deploy\n' > ~/.ssh/config
+          ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Copy the code to the server
+        run: rsync -az --delete --exclude .git --exclude .env ./ "$SERVER:~/customer-support-agent/"
+
+      - name: Build and start the new version
+        run: |
+          ssh "$SERVER" "cd ~/customer-support-agent/" \
+          && docker compose up -d --build \
+          && docker image prune -f
