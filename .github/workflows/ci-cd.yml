@@ -71,4 +71,3 @@ jobs:
         run: |
           ssh "$SERVER" "cd ~/customer-support-agent/" \
           && docker compose up -d --build \
-          && docker image prune -f
