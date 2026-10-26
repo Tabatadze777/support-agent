@@ -21,8 +21,8 @@ jobs:
       CHECKPOINT_DB_URL: postgresql://support:123123@localhost:5432/support
 
     steps:
-      - uses: actions/checkout
-      - uses: actions/setup-python
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.14"
           cache: pip
