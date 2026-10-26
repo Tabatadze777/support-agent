@@ -69,5 +69,5 @@ jobs:
 
       - name: Build and start the new version
         run: |
-          ssh "$SERVER" "cd ~/customer-support-agent/" \
-          && docker compose up -d --build \
+          ssh "$SERVER" "cd ~/customer-support-agent/ \
+          && docker compose up -d --build" \
