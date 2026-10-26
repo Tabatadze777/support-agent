@@ -65,7 +65,7 @@ jobs:
 
       - run: ssh -vT "$SERVER" 'echo ok'
         env:
-          SERVER: ${{ secrets.SERVER }}
+          SERVER: $SERVER
       - name: Copy the code to the server
         run: rsync -az --delete --exclude .git --exclude .env ./ "$SERVER:~/customer-support-agent/"
 
