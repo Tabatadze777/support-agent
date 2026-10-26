@@ -63,9 +63,7 @@ jobs:
           printf 'Host *\n  IdentityFile ~/.ssh/id_deploy\n' > ~/.ssh/config
           ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
 
-      - run: ssh -vT "$SERVER" 'echo ok'
-        env:
-          SERVER: $SERVER
+      - run: ssh -vT "ubuntu@3.120.174.255" 'echo ok'
       - name: Copy the code to the server
         run: rsync -az --delete --exclude .git --exclude .env ./ "$SERVER:~/customer-support-agent/"
 
