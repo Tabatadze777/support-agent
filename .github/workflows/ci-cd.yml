@@ -56,11 +56,9 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Set up SSH
-        env:
-          EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "$EC2_SSH_KEY" > ~/.ssh/id_deploy
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_deploy
           chmod 600 ~/.ssh/id_deploy
           printf 'Host *\n  IdentityFile ~/.ssh/id_deploy\n' > ~/.ssh/config
           ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
