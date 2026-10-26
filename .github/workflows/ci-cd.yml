@@ -42,3 +42,10 @@ jobs:
           ruff check .
           ruff format --check .
 #          pytest
+
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo "deploy layer"
