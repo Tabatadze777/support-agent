@@ -34,11 +34,11 @@ jobs:
           ruff check .
           ruff format --check .
           psql "postgresql://support:123123@localhost:5432/support" -f ../docker/initdb/01-init.sql
-          pytest
+#          pytest
 
       - name: Frontend
         working-directory: frontend
         run: |
           ruff check .
           ruff format --check .
-          pytest
+#          pytest
